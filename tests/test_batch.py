@@ -1,4 +1,4 @@
-from common import *
+from .common import *
 
 
 class TestBatch(TestCase):
@@ -27,4 +27,3 @@ class TestBatch(TestCase):
         sg = Shotgun()
         self.assertRaises(ShotgunError, sg.batch, [])
     
-        

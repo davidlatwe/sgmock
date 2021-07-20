@@ -92,7 +92,7 @@ class Fixture(object):
         data = data or kwargs
         
         filters = []
-        for k, v in data.iteritems():
+        for k, v in data.items():
             filters.append((k, 'is', v))
         entity = self.shotgun.find_one(entity_type, filters, data.keys())
         if entity:
@@ -221,7 +221,7 @@ class _Asset(_Entity):
 
 _entity_types = dict(
     (name[1:], value)
-    for name, value in globals().iteritems()
+    for name, value in globals().items()
     if isinstance(value, type) and issubclass(value, _Entity)
 )
 

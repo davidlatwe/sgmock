@@ -1,4 +1,4 @@
-from common import *
+from .common import *
 
 
 class TestBasicCreate(TestCase):
@@ -8,7 +8,7 @@ class TestBasicCreate(TestCase):
         type_ = 'Dummy' + mini_uuid().upper()
         spec = dict(name=mini_uuid())
         proj = sg.create(type_, spec)
-        print proj
+        print(proj)
         self.assertIsNot(spec, proj)
         self.assertEqual(len(proj), 3)
         self.assertEqual(proj['type'], type_)

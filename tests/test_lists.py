@@ -1,4 +1,4 @@
-from common import *
+from .common import *
 
 
 class TestLists(TestCase):
@@ -46,5 +46,4 @@ class TestLists(TestCase):
             self.assertIsNot(x, y)
             self.assertIsNot(x, z)
             self.assertIsNot(y, z)
-    
     

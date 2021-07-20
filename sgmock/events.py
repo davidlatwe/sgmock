@@ -21,7 +21,7 @@ def generate_for_update(sg, entity, old_values=None, new_values=None, extra_meta
     project = entity.get('project')
     old_values = old_values or {}
     new_values = new_values or entity
-    for key, new_value in new_values.iteritems():
+    for key, new_value in new_values.items():
         if key in ('type', 'id', 'created_at', 'updated_at', 'created_by', 'updated_by'):
             continue
         old_value = old_values.get(key)

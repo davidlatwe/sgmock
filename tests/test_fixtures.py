@@ -1,4 +1,4 @@
-from common import *
+from .common import *
 
 
 class TestFixtures(TestCase):
@@ -9,11 +9,11 @@ class TestFixtures(TestCase):
 
         fix.create('Project', dict(name='this is the name'))
         self.assertEqual(len(fix.created), 1)
-        self.assertEqual(sum(len(x) for x in sg._store.itervalues()), 1)
+        self.assertEqual(sum(len(x) for x in sg._store.values()), 1)
 
         fix.delete_all()
         self.assertEqual(len(fix.created), 0)
-        self.assertEqual(sum(len(x) for x in sg._store.itervalues()), 0)
+        self.assertEqual(sum(len(x) for x in sg._store.values()), 0)
 
     def test_find_or_create(self):
 
@@ -57,15 +57,15 @@ class TestFixtures(TestCase):
         fix = Fixture(sg)
 
         proj = fix.Project(mini_uuid())
-        print proj
+        print(proj)
         seq = proj.Sequence('AA')
-        print seq
+        print(seq)
         shot = seq.Shot('AA_001')
-        print shot
+        print(shot)
         step = fix.find_or_create('Step', short_code='Anim')
-        print step
+        print(step)
         task = shot.Task('Animate something', step=step)
-        print task
+        print(task)
 
         self.assertEqual(task['type'], 'Task')
         self.assertEqual(shot['type'], 'Shot')
@@ -100,8 +100,8 @@ class TestFixtures(TestCase):
         task = shot.Task('Animate something', step=step)
 
         self.assertEqual(len(fix.created), 5)
-        self.assertEqual(sum(len(x) for x in sg._store.itervalues()), 5)
+        self.assertEqual(sum(len(x) for x in sg._store.values()), 5)
 
         fix.delete_all()
         self.assertEqual(len(fix.created), 0)
-        self.assertEqual(sum(len(x) for x in sg._store.itervalues()), 0)
+        self.assertEqual(sum(len(x) for x in sg._store.values()), 0)

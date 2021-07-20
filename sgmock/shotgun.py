@@ -9,6 +9,7 @@ import json
 
 import shotgun_api3
 
+from ._vendor.six import string_types
 from .exceptions import ShotgunError, Fault
 from .filters import filter_entities
 from . import events
@@ -172,7 +173,7 @@ class Shotgun(object):
                     return
                 return self._minimal_copy(data)
             res = {}
-            for k, v in data.iteritems():
+            for k, v in data.items():
                 res[k] = self._reduce_links(v)
             return res
         if isinstance(data, (list, tuple)):
@@ -290,7 +291,7 @@ class Shotgun(object):
         """
 
         store = self._deleted if retired_only else self._store
-        entities = store[entity_type].itervalues()
+        entities = store[entity_type].values()
         entities = filter_entities(filters, entities)
 
         # Very rough paging.
@@ -340,7 +341,7 @@ class Shotgun(object):
 
             try:
                 args = tuple(request[name] for name in arg_names)
-            except KeyError, e:
+            except KeyError as e:
                 raise ShotgunError('%s request missing %s; %r' % (type_, e.args[0], request))
 
             responses.append(getattr(self, type_)(*args))
@@ -418,12 +419,6 @@ class Shotgun(object):
         :param \*args: All args are passed to json.load
         :param \**kwargs: All kwargs are passed to json.load
         """
-        try:
-            strtype = basestring
-        except NameError:
-            # using Python 3
-            strtype = str
-
         objects = json.load(*args, **kwargs)
         entity_ids = collections.defaultdict(int)
 
@@ -439,7 +434,7 @@ class Shotgun(object):
 
                 for field in entities[entity_id]:
                     value = entities[entity_id][field]
-                    if isinstance(value, strtype):
+                    if isinstance(value, string_types):
                         # Convert isoformat datestrings to dattime objects
                         pattern = (
                             # Date

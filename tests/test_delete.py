@@ -1,4 +1,4 @@
-from common import *
+from .common import *
 
 
 class TestDelete(TestCase):
@@ -22,4 +22,3 @@ class TestDelete(TestCase):
         
         sg.revive('Dummy', a['id'])
         self.assertSameEntity(a, sg.find_one('Dummy', [('id', 'is', a['id'])]))
-    

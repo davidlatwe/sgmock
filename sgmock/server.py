@@ -7,6 +7,7 @@ import functools
 from flask import Flask, request, Response, g
 
 from .shotgun import Shotgun
+from ._vendor.six import string_types
 from .exceptions import Fault, MockError
 
 
@@ -82,8 +83,12 @@ def json_api():
     if isinstance(result, dict) and 'results' not in result:
         result = {'results': result}
     
-    if not (isinstance(result, (Response, basestring)) or (isinstance(result, (list, tuple)) and isinstance(result[0], (Response, basestring)))):
-        result = json.dumps(result, default=json_default), 200, [('Content-Type', 'application/json')]
+    if not (isinstance(result, (Response, string_types))
+            or (isinstance(result, (list, tuple))
+                and isinstance(result[0], (Response, string_types)))):
+        result = json.dumps(result, default=json_default), \
+                 200, \
+                 [('Content-Type', 'application/json')]
 
     return result
 
@@ -92,7 +97,7 @@ def json_api():
 _api3_methods = {}
 
 def api3_method(func, name=None):
-    if isinstance(func, basestring):
+    if isinstance(func, string_types):
         return functools.partial(api3_method, name=func)
     _api3_methods[name or func.__name__] = func
     return func
@@ -166,7 +171,7 @@ def clear(params):
 @api3_method
 def count(params):
     res = {}
-    for type_, entities in g.shotgun._store.iteritems():
+    for type_, entities in g.shotgun._store.items():
         if entities:
             res[type_] = len(entities)
     return res

@@ -1,15 +1,16 @@
 from datetime import datetime
 
+from ._vendor.six import string_types
 from .exceptions import Fault, MockError
 
 _filters = {}
 
 
 def match_types(a, b):
-    if isinstance(a, datetime) and isinstance(b, basestring):
-        return (a.strftime('%Y-%m-%dT%H:%M:%SZ'), b)
-    if isinstance(a, basestring) and isinstance(b, datetime):
-        return (a, b.strftime('%Y-%m-%dT%H:%M:%SZ'))
+    if isinstance(a, datetime) and isinstance(b, string_types):
+        return a.strftime('%Y-%m-%dT%H:%M:%SZ'), b
+    if isinstance(a, string_types) and isinstance(b, datetime):
+        return a, b.strftime('%Y-%m-%dT%H:%M:%SZ')
     else:
         return a, b
 

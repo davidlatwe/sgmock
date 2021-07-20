@@ -8,7 +8,7 @@ def minimize(input_):
         return {'type': input_['type'], 'id': input_['id']}
 
     if isinstance(input_, dict):
-        return dict((key, minimize(v)) for k, v in input_.iteritems())
+        return dict((k, minimize(v)) for k, v in input_.items())
 
     if isinstance(input_, (list, tuple)):
         return tuple(minimize(x) for x in input_)

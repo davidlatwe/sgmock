@@ -1,4 +1,4 @@
-from common import *
+from .common import *
 
 
 class TestUpdate(TestCase):
@@ -24,5 +24,4 @@ class TestUpdate(TestCase):
         
         self.assertEqual(set(b), set(('type', 'id', 'key')))
         self.assertEqual(set(c), set(('type', 'id', 'key2')))
-        
         

@@ -2,7 +2,7 @@ import json
 import shutil
 import tempfile
 import datetime
-from common import *
+from .common import *
 
 type_ = 'Dummy' + mini_uuid().upper()
 
